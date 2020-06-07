@@ -32,7 +32,7 @@ public final class DataJsonLoadCommand extends AbstractCommand {
         final String json = new String(bytes, "UTF-8");
         final ObjectMapper objectMapper = new ObjectMapper();
         final Domain domain = objectMapper.readValue(json, Domain.class);
-        bootstrap.getDomainService().load(domain);
+        getDomainService().load(domain);
         System.out.println("[OK]");
     }
 

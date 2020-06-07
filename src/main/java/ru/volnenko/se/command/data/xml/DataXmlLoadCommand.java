@@ -33,7 +33,7 @@ public final class DataXmlLoadCommand extends AbstractCommand {
         final String json = new String(bytes, "UTF-8");
         final ObjectMapper objectMapper = new XmlMapper();
         final Domain domain = objectMapper.readValue(json, Domain.class);
-        bootstrap.getDomainService().load(domain);
+        getDomainService().load(domain);
         System.out.println("[OK]");
     }
 

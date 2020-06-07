@@ -1,7 +1,6 @@
 package ru.volnenko.se.service;
 
 import ru.volnenko.se.api.service.IDomainService;
-import ru.volnenko.se.api.service.ServiceLocator;
 import ru.volnenko.se.entity.Domain;
 
 /**
@@ -9,24 +8,29 @@ import ru.volnenko.se.entity.Domain;
  */
 public final class DomainService implements IDomainService {
 
-    private final ServiceLocator serviceLocator;
+    private ProjectService projectService;
+    private TaskService taskService;
 
-    public DomainService(final ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
+    public void setProjectService(ProjectService projectService) {
+        this.projectService = projectService;
+    }
+
+    public void setTaskService(TaskService taskService) {
+        this.taskService = taskService;
     }
 
     @Override
     public void load(final Domain domain) {
         if (domain == null) return;
-        serviceLocator.getProjectService().load(domain.getProjects());
-        serviceLocator.getTaskService().load(domain.getTasks());
+        projectService.load(domain.getProjects());
+        taskService.load(domain.getTasks());
     }
 
     @Override
     public void export(final Domain domain) {
         if (domain == null) return;
-        domain.setProjects(serviceLocator.getProjectService().getListProject());
-        domain.setTasks(serviceLocator.getTaskService().getListTask());
+        domain.setProjects(projectService.getListProject());
+        domain.setTasks(taskService.getListTask());
     }
 
 }

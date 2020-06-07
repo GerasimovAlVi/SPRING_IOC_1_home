@@ -20,7 +20,7 @@ public final class DataBinaryLoadCommand extends AbstractCommand {
 
     @Override
     public String description() {
-        return "Save data to binary file.";
+        return "Load data from binary file.";
     }
 
     @Override
@@ -38,13 +38,13 @@ public final class DataBinaryLoadCommand extends AbstractCommand {
     private void loadProjects(final Object value) {
         if (!(value instanceof Project[])) return;
         final Project[] projects = (Project[]) value;
-        bootstrap.getProjectService().load(projects);
+        getProjectService().load(projects);
     }
 
     private void loadTasks(final Object value) {
         if (!(value instanceof Task[])) return;
         final Task[] tasks = (Task[]) value;
-        bootstrap.getTaskService().load(tasks);
+        getTaskService().load(tasks);
     }
 
 }

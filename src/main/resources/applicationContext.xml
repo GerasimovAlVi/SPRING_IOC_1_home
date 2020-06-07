@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <import resource="commandContext.xml"/>
+
+
+
+    <bean id="bootstrap" class="ru.volnenko.se.controller.Bootstrap">
+        <property name="scannerService" ref="scannerService"/>
+        <property name="commands">
+            <map key-type="java.lang.String" value-type="ru.volnenko.se.command.AbstractCommand">
+                <entry key="help" value-ref="helpCommand"/>
+
+                <entry key="project-clear" value-ref="projectClearCommand"/>
+                <entry key="project-create" value-ref="projectCreateCommand"/>
+                <entry key="project-list" value-ref="projectListCommand"/>
+                <entry key="project-remove" value-ref="projectRemoveCommand"/>
+
+                <entry key="task-clear" value-ref="taskClearCommand"/>
+                <entry key="task-create" value-ref="taskCreateCommand"/>
+                <entry key="task-list" value-ref="taskListCommand"/>
+                <entry key="task-remove" value-ref="taskRemoveCommand"/>
+
+                <entry key="data-bin-clear" value-ref="dataBinaryClearCommand"/>
+                <entry key="data-bin-load" value-ref="dataBinaryLoadCommand"/>
+                <entry key="data-bin-save" value-ref="dataBinarySaveCommand"/>
+
+                <entry key="data-json-clear" value-ref="dataJsonClearCommand"/>
+                <entry key="data-json-load" value-ref="dataJsonLoadCommand"/>
+                <entry key="data-json-save" value-ref="dataJsonSaveCommand"/>
+
+                <entry key="data-xml-clear" value-ref="dataXmlClearCommand"/>
+                <entry key="data-xml-load" value-ref="dataXmlLoadCommand"/>
+                <entry key="data-xml-save" value-ref="dataXmlSaveCommand"/>
+            </map>
+        </property>
+    </bean>
+
+</beans>

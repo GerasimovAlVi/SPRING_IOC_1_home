@@ -21,8 +21,8 @@ public final class TaskCreateCommand extends AbstractCommand {
     public void execute() {
         System.out.println("[TASK CREATE]");
         System.out.println("ENTER NAME:");
-        final String name = bootstrap.nextLine();
-        bootstrap.getTaskRepository().createTask(name);
+        final String name = getScannerService().nextLine();
+        getTaskService().getTaskRepository().createTask(name);
         System.out.println("[OK]");
         System.out.println();
     }

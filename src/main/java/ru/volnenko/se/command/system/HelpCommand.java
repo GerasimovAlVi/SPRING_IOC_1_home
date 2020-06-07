@@ -2,10 +2,18 @@ package ru.volnenko.se.command.system;
 
 import ru.volnenko.se.command.AbstractCommand;
 
+import java.util.List;
+
 /**
  * @author Denis Volnenko
  */
 public final class HelpCommand extends AbstractCommand {
+
+    private List<AbstractCommand> commands;
+
+    public void setCommands(List<AbstractCommand> commands) {
+        this.commands = commands;
+    }
 
     @Override
     public String command() {
@@ -19,7 +27,7 @@ public final class HelpCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        for (AbstractCommand command: bootstrap.getListCommand()) {
+        for (AbstractCommand command: commands) {
             System.out.println(command.command()+ ": " + command.description());
         }
     }

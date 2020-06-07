@@ -29,7 +29,7 @@ public final class DataXmlSaveCommand extends AbstractCommand {
     public void execute() throws Exception {
         System.out.println("[DATA XML SAVE]");
         final Domain domain = new Domain();
-        bootstrap.getDomainService().export(domain);
+        getDomainService().export(domain);
         final ObjectMapper objectMapper = new XmlMapper();
         final ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         final String json = objectWriter.writeValueAsString(domain);

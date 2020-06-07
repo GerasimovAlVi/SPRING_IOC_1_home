@@ -22,14 +22,14 @@ public final class DataBinarySaveCommand extends AbstractCommand {
 
     @Override
     public String description() {
-        return "Load data from binary file.";
+        return "Save data to binary file.";
     }
 
     @Override
     public void execute() throws Exception {
         System.out.println("[DATA BINARY SAVE]");
-        final Project[] projects = bootstrap.getProjectService().getListProject().toArray(new Project[] {});
-        final Task[] tasks = bootstrap.getTaskService().getListTask().toArray(new Task[] {});
+        final Project[] projects = getProjectService().getListProject().toArray(new Project[] {});
+        final Task[] tasks = getTaskService().getListTask().toArray(new Task[] {});
 
         final File file = new File(DataConstant.FILE_BINARY);
         Files.deleteIfExists(file.toPath());

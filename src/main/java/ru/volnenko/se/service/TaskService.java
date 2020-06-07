@@ -14,15 +14,22 @@ import java.util.List;
  */
 public final class TaskService implements ITaskService {
 
-    private final ITaskRepository taskRepository;
+    private ITaskRepository taskRepository;
+    private IProjectRepository projectRepository;
 
-    private final IProjectRepository projectRepository;
+    public ITaskRepository getTaskRepository() {
+        return taskRepository;
+    }
 
-    public TaskService(
-            final ITaskRepository taskRepository,
-            final IProjectRepository projectRepository
-    ) {
+    public void setTaskRepository(ITaskRepository taskRepository) {
         this.taskRepository = taskRepository;
+    }
+
+    public IProjectRepository getProjectRepository() {
+        return projectRepository;
+    }
+
+    public void setProjectRepository(IProjectRepository projectRepository) {
         this.projectRepository = projectRepository;
     }
 

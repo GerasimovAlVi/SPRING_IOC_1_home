@@ -22,7 +22,7 @@ public final class TaskListCommand extends AbstractCommand {
     public void execute() {
         System.out.println("[TASK LIST]");
         int index = 1;
-        for (Task task: bootstrap.getTaskRepository().getListTask()) {
+        for (Task task: getTaskService().getTaskRepository().getListTask()) {
             System.out.println(index + ". " + task.getName());
             index++;
         }

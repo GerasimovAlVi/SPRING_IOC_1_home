@@ -9,7 +9,11 @@ import java.util.*;
  */
 public final class ProjectRepository implements ru.volnenko.se.api.repository.IProjectRepository {
 
-    private final Map<String, Project> map = new LinkedHashMap<>();
+    private Map<String, Project> map;
+
+    public void setMap(Map<String, Project> map) {
+        this.map = map;
+    }
 
     @Override
     public Project createProject(final String name) {

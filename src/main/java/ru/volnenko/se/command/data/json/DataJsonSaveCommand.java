@@ -29,7 +29,7 @@ public final class DataJsonSaveCommand extends AbstractCommand {
     public void execute() throws Exception {
         System.out.println("[DATA JSON SAVE]");
         final Domain domain = new Domain();
-        bootstrap.getDomainService().export(domain);
+        getDomainService().export(domain);
         final ObjectMapper objectMapper = new ObjectMapper();
         final ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         final String json = objectWriter.writeValueAsString(domain);

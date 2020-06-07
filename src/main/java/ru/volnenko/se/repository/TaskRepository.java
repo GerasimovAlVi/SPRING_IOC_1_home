@@ -9,7 +9,11 @@ import java.util.*;
  */
 public final class TaskRepository implements ru.volnenko.se.api.repository.ITaskRepository {
 
-    private final Map<String, Task> map = new LinkedHashMap<>();
+    private Map<String, Task> map;
+
+    public void setMap(Map<String, Task> map) {
+        this.map = map;
+    }
 
     @Override
     public Task createTask(final String name) {
