@@ -1,43 +1,36 @@
 package ru.volnenko.se.controller;
 
-import ru.volnenko.se.command.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Component;
+import ru.volnenko.se.command.event.CommandEvent;
 import ru.volnenko.se.service.ScannerService;
-
-import java.util.*;
 
 /**
  * @author Denis Volnenko
  */
+@Component
 public final class Bootstrap {
 
-    private Map<String, AbstractCommand> commands = new LinkedHashMap<>();
-    private ScannerService scannerService;
+    @Autowired
+    private ApplicationEventPublisher publisher;
 
+    private ScannerService scannerService;
+    @Autowired
     public void setScannerService(ScannerService scannerService) {
         this.scannerService = scannerService;
     }
 
-    public void setCommands(Map<String, AbstractCommand> commands) {
-        this.commands = commands;
-    }
-
-    public void init() throws Exception {
-        start();
-    }
-
-    private void start() throws Exception {
+    public void start() {
         System.out.println("*** WELCOME TO TASK MANAGER ***");
         String command = "";
+        final CommandEvent commandEvent = new CommandEvent(this);
         while (!"exit".equals(command)) {
             command = scannerService.nextLine();
-            execute(command);
+            if (command != null && !command.isEmpty()){
+                commandEvent.setCommand(command);
+                publisher.publishEvent(commandEvent);
+            }
         }
-    }
-
-    private void execute(final String command) throws Exception {
-        if (command == null || command.isEmpty()) return;
-        final AbstractCommand abstractCommand = commands.get(command);
-        if (abstractCommand == null) return;
-        abstractCommand.execute();
     }
 }

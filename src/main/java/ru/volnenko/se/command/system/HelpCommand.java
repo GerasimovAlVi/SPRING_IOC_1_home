@@ -1,18 +1,24 @@
 package ru.volnenko.se.command.system;
 
+import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 import ru.volnenko.se.command.AbstractCommand;
+import ru.volnenko.se.command.event.CommandEvent;
 
 import java.util.List;
 
 /**
  * @author Denis Volnenko
  */
-public final class HelpCommand extends AbstractCommand {
+@Component
+public class HelpCommand extends AbstractCommand {
 
     private List<AbstractCommand> commands;
 
-    public void setCommands(List<AbstractCommand> commands) {
+    public HelpCommand(List<AbstractCommand> commands) {
         this.commands = commands;
+        this.commands.add(this);
     }
 
     @Override
@@ -26,10 +32,11 @@ public final class HelpCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() {
+    @Async
+    @EventListener(condition ="'help' eq #event.command")
+    public void execute(CommandEvent event) {
         for (AbstractCommand command: commands) {
             System.out.println(command.command()+ ": " + command.description());
         }
     }
-
 }

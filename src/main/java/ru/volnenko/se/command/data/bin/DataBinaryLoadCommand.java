@@ -1,9 +1,16 @@
 package ru.volnenko.se.command.data.bin;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 import ru.volnenko.se.command.AbstractCommand;
+import ru.volnenko.se.command.event.CommandEvent;
 import ru.volnenko.se.constant.DataConstant;
 import ru.volnenko.se.entity.Project;
 import ru.volnenko.se.entity.Task;
+import ru.volnenko.se.service.ProjectService;
+import ru.volnenko.se.service.TaskService;
 
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
@@ -11,7 +18,20 @@ import java.io.ObjectInputStream;
 /**
  * @author Denis Volnenko
  */
-public final class DataBinaryLoadCommand extends AbstractCommand {
+@Component
+public class DataBinaryLoadCommand extends AbstractCommand {
+
+    private ProjectService projectService;
+    @Autowired
+    public void setProjectService(ProjectService projectService) {
+        this.projectService = projectService;
+    }
+
+    private TaskService taskService;
+    @Autowired
+    public void setTaskService(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     @Override
     public String command() {
@@ -24,7 +44,9 @@ public final class DataBinaryLoadCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() throws Exception {
+    @Async
+    @EventListener(condition ="'data-bin-load' eq #event.command")
+    public void execute(CommandEvent event) throws Exception {
         System.out.println("[DATA BINARY LOAD]");
         final FileInputStream fileInputStream = new FileInputStream(DataConstant.FILE_BINARY);
         final ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
@@ -38,13 +60,13 @@ public final class DataBinaryLoadCommand extends AbstractCommand {
     private void loadProjects(final Object value) {
         if (!(value instanceof Project[])) return;
         final Project[] projects = (Project[]) value;
-        getProjectService().load(projects);
+        projectService.load(projects);
     }
 
     private void loadTasks(final Object value) {
         if (!(value instanceof Task[])) return;
         final Task[] tasks = (Task[]) value;
-        getTaskService().load(tasks);
+        taskService.load(tasks);
     }
 
 }
